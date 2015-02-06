@@ -216,14 +216,17 @@ end
 # should return true for a 3 dot range like 1...20, false for a 
 # normal 2 dot range
 def is_a_3_dot_range?(range)
+  range.exclude_end?
 end
 
 # get the square root of a number
 def square_root_of(number)
+  Math.sqrt(number)
 end
 
 # count the number of words in a file
-def word_count_a_file(file_path)
+def word_count_a_file(file_path)  
+  File.open(file_path, 'r') { |f| f.read.split(" ").length }
 end
 
 # --- tougher ones ---
@@ -232,12 +235,15 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
+  str_method.to_proc.call(self)
 end
 
 # return true if the date is a uk bank holiday for 2014
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
+  bank_holidays = ['01/01', '18/04', '21/04', '05/05', '26/05', '25/08', '25/12', '26/12']
+  [date.strftime('%d/%m')] & bank_holidays == [date.strftime('%d/%m')] ? true : false
 end
 
 # given your birthday this year, this method tells you
@@ -253,6 +259,13 @@ end
 # and 1 that is 4 letters long. Return it as a hash in the format
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 def count_words_of_each_length_in_a_file(file_path)
+  words = File.open(file_path, 'r') { |f| f.read.gsub(/[^a-zA-Z0-9\s]/, "").split(" ")}
+  p words.length
+  lengths = words.map(&:length).uniq.sort
+  p lengths
+  result = Hash.new
+  lengths.each { |l| result[l]=words.select{|w| w.length == l}.length }
+  return result
 end
 
 # implement fizzbuzz without modulo, i.e. the % method
