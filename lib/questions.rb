@@ -242,8 +242,12 @@ end
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
-  bank_holidays = ['01/01', '18/04', '21/04', '05/05', '26/05', '25/08', '25/12', '26/12']
-  [date.strftime('%d/%m')] & bank_holidays == [date.strftime('%d/%m')] ? true : false
+  require 'HTTParty'
+  require 'JSON'
+  response = JSON.parse((HTTParty.get('https://www.gov.uk/bank-holidays.json/')).body)["england-and-wales"]["events"]
+  bank_holidays = []
+  response.each { |e| bank_holidays << e["date"] }
+  [date.strftime('%F')] & bank_holidays == [date.strftime('%F')] ? true : false
 end
 
 # given your birthday this year, this method tells you
