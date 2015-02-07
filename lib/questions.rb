@@ -109,7 +109,7 @@ end
 # becomes [1, 2, 3, 1, 2, 3]
 def double_array(array)
   new_array = []
-  array.cycle(2){ |num| new_array << num}
+  array.cycle(2){ |num| new_array << num }
   return new_array
 end
 
@@ -251,6 +251,13 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
+  year, month, day = birthday.year, birthday.month, birthday.day
+  friday_birthday = false
+  until friday_birthday == true do
+    year +=1
+    friday_birthday = true if Time.new(year, month, day).friday?
+  end
+  return year
 end
 
 # in a file, total the number of times words of different lengths
@@ -260,9 +267,7 @@ end
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 def count_words_of_each_length_in_a_file(file_path)
   words = File.open(file_path, 'r') { |f| f.read.gsub(/[^a-zA-Z0-9\s]/, "").split(" ")}
-  p words.length
   lengths = words.map(&:length).uniq.sort
-  p lengths
   result = Hash.new
   lengths.each { |l| result[l]=words.select{|w| w.length == l}.length }
   return result
@@ -272,6 +277,7 @@ end
 # go from 1 to 100
 # (there's no RSpec test for this one)
 def fizzbuzz_without_modulo
+  (1..100).each { |i| puts i/15.to_f == i/15 ? "fizbuzz\n" : (i/3.to_f == i/3 ? "fizz\n" : (i/5.to_f == i/5 ? "buzz\n" : "#{i}\n"))}
 end
 
 # print the lyrics of the song 99 bottles of beer on the wall
@@ -281,4 +287,10 @@ end
 # at the end.
 # (there's no RSpec test for this one)
 def ninety_nine_bottles_of_beer
+  puts "99 bottles of beer on the wall, 99 bottles of beer.\n"
+  98.downto(0) do |i|
+    i == 0 ? ibottles = "no more bottles" : (i ==1 ? ibottles = "#{i} bottle" : ibottles = "#{i} bottles")
+    puts "Take one down and pass it around, #{ibottles} of beer on the wall.\n\n#{ibottles.capitalize} of beer on the wall, #{ibottles} of beer.\n"
+  end
+  puts "Go to the store and buy some more, 99 bottles of beer on the wall."
 end
