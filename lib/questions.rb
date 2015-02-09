@@ -28,6 +28,12 @@ end
 # give every possible pairing - in this case:
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
+
+# how to do with permutation method (?)
+# def every_possible_pairing_of_students(array)
+#   return array.permutation(2).to_a.uniq
+# end
+
 def every_possible_pairing_of_students(array)
   new_array = []
   while array.length > 1
@@ -96,7 +102,7 @@ end
 
 # return the shortest word in an array
 def longest_word_in_array(array)
-    array.max_by { |word| word.length }
+  array.max_by { |word| word.length }
 end
 
 # add up all the numbers in an array, so [1, 3, 5, 6]
