@@ -27,25 +27,25 @@ end
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
 # give every possible pairing - in this case:
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
-# make sure you don't have the same pairing twice, 
+# make sure you don't have the same pairing twice,
 
 # how to do with permutation method (?)
-# def every_possible_pairing_of_students(array)
-#   return array.permutation(2).to_a.uniq
-# end
-
 def every_possible_pairing_of_students(array)
-  new_array = []
-  while array.length > 1
-    student1 = array.shift
-    array.each do |student2|
-      new_array << [student1, student2]
-    end
-  end
-  return new_array
+  array.combination(2)
 end
 
-# discard the first 3 elements of an array, 
+# def every_possible_pairing_of_students(array)
+#   new_array = []
+#   while array.length > 1
+#     student1 = array.shift
+#     array.each do |student2|
+#       new_array << [student1, student2]
+#     end
+#   end
+#   return new_array
+# end
+
+# discard the first 3 elements of an array,
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
 def all_elements_except_first_3(array)
   array.drop(3)
@@ -72,10 +72,11 @@ end
 # turn a positive integer into a negative integer. A negative integer
 # stays negative
 def make_numbers_negative(number)
-  [number, 0-number].min {|a, b| a <=> b }
+  [number, 0-number].min #{|a, b| a <=> b }
 end
+# or -(number.abs)
 
-# turn an array of numbers into two arrays of numbers, one an array of 
+# turn an array of numbers into two arrays of numbers, one an array of
 # even numbers, the other an array of odd numbers
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
@@ -84,6 +85,7 @@ def separate_array_into_even_and_odd_numbers(array)
   array.each { |num| new_array[num % 2] << num  }
   return new_array
 end
+# array.partition {|n| n.even?}
 
 # count the numbers of elements in an element which are palindromes
 # a palindrome is a word that's the same backwards as forward
@@ -116,6 +118,7 @@ def double_array(array)
   array.cycle(2){ |num| new_array << num }
   return new_array
 end
+# or array + array
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
@@ -195,7 +198,7 @@ def get_domain_name_from_email_address(email)
   email[email.index('@')+1..email.index('.')-1]
 end
 
-# capitalize the first letter in each word of a string, 
+# capitalize the first letter in each word of a string,
 #  except 'a', 'and' and 'the'
 # *unless* they come at the start of the start of the string, e.g.
 # 'the lion the witch and the wardrobe' becomes
@@ -217,7 +220,7 @@ def get_upper_limit_of(range)
   range.max
 end
 
-# should return true for a 3 dot range like 1...20, false for a 
+# should return true for a 3 dot range like 1...20, false for a
 # normal 2 dot range
 def is_a_3_dot_range?(range)
   range.exclude_end?
@@ -229,7 +232,7 @@ def square_root_of(number)
 end
 
 # count the number of words in a file
-def word_count_a_file(file_path)  
+def word_count_a_file(file_path)
   File.open(file_path, 'r') { |f| f.read.split(" ").length }
 end
 
@@ -280,6 +283,7 @@ def count_words_of_each_length_in_a_file(file_path)
   lengths.each { |l| result[l]=words.select{|w| w.length == l}.length }
   return result
 end
+# example Hash[*data.group_by{ |v| v }.flat_map{ |k, v| [k, v.size] }]
 
 # implement fizzbuzz without modulo, i.e. the % method
 # go from 1 to 100
@@ -290,7 +294,7 @@ end
 
 # print the lyrics of the song 99 bottles of beer on the wall
 # http://www.99-bottles-of-beer.net/lyrics.html
-# make sure you use the singular when you have one bottle of 
+# make sure you use the singular when you have one bottle of
 # beer on the wall, and print 'no more bottles of beer on the wall'
 # at the end.
 # (there's no RSpec test for this one)
