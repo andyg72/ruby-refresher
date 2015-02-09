@@ -1,27 +1,27 @@
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
-  return array.select { |x| x[0] == 'a' }
+  array.select { |x| x[0] == 'a' }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
-  return array.select { |x| x[/^[aeiou]/] }
+  array.select { |x| x[/^[aeiou]/] }
 end
 
 # remove instances of nil (but NOT false) from an array
 def remove_nils_from_array(array)
-  return array.compact
+  array.compact
 end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
-  return array.compact.reject { |x| x == false }
+  array.compact.reject { |x| x == false }
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
-  return array.map(&:reverse)
+  array.map(&:reverse)
 end
 
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
@@ -90,9 +90,7 @@ end
 # e.g. 'bob'. So in the array ['bob', 'radar', 'eat'], there
 # are 2 palindromes (bob and radar), so the method should return 2
 def number_of_elements_that_are_palindromes(array)
-  palindromes = 0
-  array.each { |word| palindromes += 1 if word == word.reverse }
-  return palindromes
+  array.count { |word| word == word.reverse }
 end
 
 # return the shortest word in an array
@@ -121,13 +119,13 @@ end
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
-  return symbol.to_s
+  symbol.to_s
 end
 
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
-  return (array.inject(:+)/array.length.to_f).round
+  (array.inject(:+)/array.length.to_f).round
 end
 
 # get all the elements in an array, up until the first element
